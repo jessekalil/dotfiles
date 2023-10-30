@@ -9,6 +9,7 @@ fi
 #  source /usr/share/zsh/manjaro-zsh-prompt
 #fi
 
+export GITHUB_USERNAME='jessekalil'
 export UID=$UID
 export GID=$GID
 export EDITOR="lvim"
