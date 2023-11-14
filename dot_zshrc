@@ -187,8 +187,11 @@ esac
 # Go
 export PATH="$PATH:$(go env GOPATH)/bin"
 
+
 # Cargo
-source "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+  source "$HOME/.cargo/env"
+fi
 
 # Lunarvim
 export PATH="$HOME/.local/bin":$PATH
