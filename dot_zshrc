@@ -224,6 +224,23 @@ load-nvmrc
 #######################
 
 # Neofetch 
-if [ -f /usr/bin/neofetch ]; then
+# if [ -f /usr/bin/neofetch ]; then
   #neofetch
+# fi
+
+
+if [ -z "$TMUX" ]; then
+  if [[ $(tmux list-sessions) ]]; then
+    echo "Existing detected, attach? (y/n)"
+    read choice
+    if [[ "$choice" =~ ^(yes|y|Y)$ ]]; then
+      tmux attach-session -t 0
+    elif [[ "$choice" =~ ^(console|c|C)$ ]]; then
+      # do nothing
+    else
+      tmux new-session
+    fi
+  else
+    tmux new-session
+  fi
 fi
