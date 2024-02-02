@@ -24,7 +24,8 @@ export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="lvim"
 export BAT_THEME="Dracula"
 export BROWSER="powershell.exe /C start"
-export AWS_PROFILE="plataformaa-dev"
+
+export AWS_DEFAULT_PROFILE="{{ .user.aws.profile }}"
 export AWS_SDK_LOAD_CONFIG=1
 
 ### Added by Zinit's installer
@@ -174,7 +175,7 @@ esac
 
 # Go
 export PATH="$PATH:$(go env GOPATH)/bin"
-
+export GOPATH="$(go env GOPATH)"
 
 # Cargo
 if [ -f "$HOME/.cargo/env" ]; then
