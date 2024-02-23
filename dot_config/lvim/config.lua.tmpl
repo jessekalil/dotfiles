@@ -10,13 +10,13 @@ vim.opt.wrap = false
 -- keymappings
 lvim.leader = "space"
 
-lvim.keys.normal_mode["<esc><esc>"] = "<cmd>nohlsearch<cr>"
+-- lvim.keys.normal_mode["<esc><esc>"] = "<cmd>nohlsearch<cr>"
 -- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 -- whichkey
-lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<CR>", "Files" }
+-- lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<CR>", "Files" }
 
 -- Builtins
 lvim.builtin.alpha.active = true
@@ -78,8 +78,8 @@ lvim.lsp.installer.setup.automatic_installation = false
 -- })
 
 -- -- linters, formatters and code actions <https://www.lunarvim.org/docs/configuration/language-features/linting-and-formatting>
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
+-- local formatters = require "lvim.lsp.null-ls.formatters"
+-- formatters.setup {
   -- {
   --   exe = "gofmt",
   --   filetypes = { "go", "go.mod" },
@@ -96,7 +96,7 @@ formatters.setup {
   --   exe = "prettier",
   --   filetypes = { "markdown", "md", "javascript", "json", "typescript", "vue" },
   -- },
-}
+-- }
 
 -- local linters = require "lvim.lsp.null-ls.linters"
 -- linters.setup {
