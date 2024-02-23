@@ -178,6 +178,11 @@ esac
 export PATH="$PATH:$(go env GOPATH)/bin"
 export GOPATH="$(go env GOPATH)"
 
+# Bun
+export PATH="$HOME/.bun/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+export BUN_INSTALL="$HOME/.bun"
+
 # Cargo
 if [ -f "$HOME/.cargo/env" ]; then
   source "$HOME/.cargo/env"
@@ -218,19 +223,20 @@ load-nvmrc
   #neofetch
 # fi
 
-
-if [ -z "$TMUX" ]; then
-  if [[ $(tmux list-sessions) ]]; then
-    echo "Existing detected, attach? (y/n)"
-    read choice
-    if [[ "$choice" =~ ^(yes|y|Y)$ ]]; then
-      tmux attach-session -t 0
-    elif [[ "$choice" =~ ^(console|c|C)$ ]]; then
-      # do nothing
+if ![ -n "$SSH_CLIENT" ] && ![ -n "$SSH_TTY" ]; then
+  if [ -z "$TMUX" ]; then
+    if [[ $(tmux list-sessions) ]]; then
+      echo "Existing detected, attach? (y/n)"
+      read choice
+      if [[ "$choice" =~ ^(yes|y|Y)$ ]]; then
+        tmux attach-session -t 0
+      elif [[ "$choice" =~ ^(console|c|C)$ ]]; then
+        # do nothing
+      else
+        tmux new-session
+      fi
     else
       tmux new-session
     fi
-  else
-    tmux new-session
   fi
 fi
