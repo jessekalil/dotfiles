@@ -8,3 +8,8 @@
 [core]
   editor = lvim
   autocrlf = false
+
+{{ if .user.git.custompath }}
+[includeIf "gitdir:{{ .user.git.custompath }}/"]
+  path = {{ .user.git.custompath }}/.gitconfig
+{{ end }}
