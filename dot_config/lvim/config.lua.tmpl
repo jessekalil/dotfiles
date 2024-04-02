@@ -1,5 +1,5 @@
 -- general
-lvim.colorscheme = "aura-soft-dark"
+lvim.colorscheme = "tokyonight-night"
 lvim.format_on_save = false
 lvim.log.level = "info"
 vim.opt.shiftwidth = 2
@@ -9,16 +9,17 @@ vim.opt.wrap = false
 
 -- keymappings
 lvim.leader = "space"
+lvim.builtin.which_key.mappings["t"] = {
+  name = "Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
+}
 
--- lvim.keys.normal_mode["<esc><esc>"] = "<cmd>nohlsearch<cr>"
--- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-
--- whichkey
--- lvim.builtin.which_key.mappings.f = { "<cmd>lua require('lir.float').toggle()<CR>", "Files" }
-
--- Builtins
+-- Builtin
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
@@ -46,80 +47,70 @@ lvim.builtin.treesitter.ignore_install = { "haskell" }
 -- LSP
 lvim.lsp.installer.setup.automatic_installation = false
 
--- -- you can set a custom on_attach function that will be used for all the language servers
--- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
+local formatters = require("lvim.lsp.null-ls.formatters")
+formatters.setup({
+  {
+    name = "prettierd",
+    args = { "--print-width", "90" },
+    -- filetypes = { "javascript", "json", "typescript", "vue", "html", "css", "scss", "markdown" },
+  }
+})
 
--- local formatters = require("lvim.lsp.null-ls.formatters")
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+  {
+    source = "eslint",
+    command = "eslint_d",
+    -- args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
+    -- format = "line",
+    -- on_attach = function(client, _)
+    --   client.resolved_capabilities.document_formatting = false
+    -- end,
+  },
+}
 
--- formatters.setup({
--- 	{
--- 		exe = "gofmt",
--- 		filetypes = { "go", "go.mod" },
--- 	},
--- 	{
--- 		exe = "goimports",
--- 		filetypes = { "go", "go.mod" },
--- 	},
--- 	{
--- 		exe = "prettier",
--- 		filetypes = { "markdown", "md", "javascript", "json", "typescript" },
--- 	},
--- 	{
--- 		exe = "stylua",
--- 		filetypes = { "lua" },
--- 	},
--- })
-
--- -- linters, formatters and code actions <https://www.lunarvim.org/docs/configuration/language-features/linting-and-formatting>
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
-  -- {
-  --   exe = "gofmt",
-  --   filetypes = { "go", "go.mod" },
-  -- },
-  -- {
-  --   exe = "goimports",
-  --   filetypes = { "go", "go.mod" },
-  -- },
-  -- {
-  --   exe = "stylua",
-  --   filetypes = { "lua" },
-  -- },
-  -- {
-  --   exe = "prettier",
-  --   filetypes = { "markdown", "md", "javascript", "json", "typescript", "vue" },
-  -- },
--- }
-
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { command = "flake8", filetypes = { "python" } },
---   {
---     command = "shellcheck",
---     args = { "--severity", "warning" },
---   },
--- }
 -- local code_actions = require "lvim.lsp.null-ls.code_actions"
 -- code_actions.setup {
 --   {
---     exe = "eslint",
---     filetypes = { "typescript", "typescriptreact" },
+--     name = "eslint_d"
+--     -- filetypes = { "typescript", "typescriptreact" },
+--   },
+-- }
+--
+-- local diagnostics = require("lvim.lsp.null-ls.diagnostics")
+-- diagnostics.setup {
+--   {
+--     source = "eslint",
+--     command = "eslint_d",
+--     -- args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
+--     -- format = "line",
+--     -- on_attach = function(client, _)
+--     --   client.resolved_capabilities.document_formatting = false
+--     -- end,
 --   },
 -- }
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/configuration/plugins/user-plugins>
 lvim.plugins = {
-  -- {
-  --   "folke/trouble.nvim",
-  --   cmd = "TroubleToggle",
-  -- },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- settings without a patched font or icons
+    opts = {
+      icons = false,
+      fold_open = "v",    -- icon used for open folds
+      fold_closed = ">",  -- icon used for closed folds
+      indent_lines = false, -- add an indent guide below the fold icons
+      signs = {
+        -- icons / text used for a diagnostic
+        error = "error",
+        warning = "warn",
+        hint = "hint",
+        information = "info"
+      },
+      use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
+    }
+  },
   {
     "baliestri/aura-theme",
     lazy = false,
@@ -131,6 +122,12 @@ lvim.plugins = {
   },
   { "dracula/vim" },
   {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
     "zbirenbaum/copilot-cmp",
     event = "InsertEnter",
     dependencies = { "zbirenbaum/copilot.lua" },
@@ -141,4 +138,41 @@ lvim.plugins = {
       end, 100)
     end,
   },
+  {
+    "folke/todo-comments.nvim",
+    event = "BufRead",
+    config = function()
+      require("todo-comments").setup()
+    end,
+  },
+  -- Discord Presence
+  {
+    "andweeb/presence.nvim",
+    confg = function()
+      -- The setup config table shows all available config options with their default values:
+      require("presence").setup({
+        -- General options
+        auto_update         = false,                      -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+        neovim_image_text   = "The One True Text Editor", -- Text displayed when hovered over the Neovim image
+        main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
+        -- client_id           = "793271441293967371",   -- Use your own Discord application client id (not recommended)
+        log_level           = nil,                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+        debounce_timeout    = 10,                         -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+        enable_line_number  = true,                       -- Displays the current line number instead of the current project
+        blacklist           = {},                         -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
+        buttons             = false,                      -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
+        file_assets         = {},                         -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
+        show_time           = false,                      -- Show the timer
+
+        -- Rich Presence text options
+        editing_text        = "Editing %s",         -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
+        file_explorer_text  = "Browsing %s",        -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
+        git_commit_text     = "Committing changes", -- Format string rendered when committing changes in git (either string or function(filename: string): string)
+        plugin_manager_text = "Managing plugins",   -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
+        reading_text        = "Reading %s",         -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
+        -- workspace_text      = "Working on %s",  -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
+        line_number_text    = "Line %s out of %s",  -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+      })
+    end,
+  }
 }
