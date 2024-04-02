@@ -1,4 +1,5 @@
 set-option -g prefix C-k
+setw -g mode-keys vi
 
 bind e setw synchronize-panes on
 bind E setw synchronize-panes off
