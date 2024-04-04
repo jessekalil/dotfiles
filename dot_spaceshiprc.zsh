@@ -12,7 +12,7 @@ SPACESHIP_PROMPT_ORDER=(
   hg            # Mercurial section (hg_branch  + hg_status)
   node		# Node.js section	
   golang	# Golang section
-  exec_time     # Execution time
+  # exec_time     # Execution time
   line_sep      # Line break
   jobs          # Background jobs indicator
   exit_code     # Exit code section
