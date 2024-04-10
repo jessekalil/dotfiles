@@ -25,7 +25,19 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-lvim.builtin.treesitter.context_commentstring = nil
+
+-- Lualine
+local components = require("lvim.core.lualine.components")
+lvim.builtin.lualine.sections.lualine_c = {
+  components.diff,
+  components.treesitter,
+  components.filename,
+  "searchcount"
+}
+lvim.builtin.lualine.sections.lualine_y = {
+  components.spaces,
+  components.location
+}
 
 -- treesitter
 lvim.builtin.treesitter.auto_install = false
@@ -44,29 +56,30 @@ lvim.builtin.treesitter.ensure_installed = {
   "dockerfile",
 }
 lvim.builtin.treesitter.ignore_install = { "haskell" }
+lvim.builtin.treesitter.context_commentstring = nil
 
 -- LSP
 lvim.lsp.installer.setup.automatic_installation = false
 
-local formatters = require("lvim.lsp.null-ls.formatters")
-formatters.setup({
-  {
-    name = "prettierd",
-    args = { "--print-width", "90" },
-    -- filetypes = { "javascript", "json", "typescript", "vue", "html", "css", "scss", "markdown" },
-  }
-})
+-- local formatters = require("lvim.lsp.null-ls.formatters")
+-- formatters.setup({
+--   {
+--     name = "prettierd",
+--     args = { "--print-width", "90" },
+--     filetypes = { "javascript", "json", "typescript", "vue", "html", "css", "scss", "markdown" },
+--   }
+-- })
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   {
     source = "eslint",
     command = "eslint_d",
-    -- args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
-    -- format = "line",
-    -- on_attach = function(client, _)
-    --   client.resolved_capabilities.document_formatting = false
-    -- end,
+    args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
+    format = "line",
+    on_attach = function(client, _)
+      client.resolved_capabilities.document_formatting = false
+    end,
   },
 }
 
