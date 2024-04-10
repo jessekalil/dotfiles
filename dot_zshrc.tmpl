@@ -236,7 +236,12 @@ if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]; then
         tmux new-session
       fi
     else
-      tmux new-session
+      tmux new-session -d 'dev'
+      tmux rename-window 'home'
+      # tmux split-window -v ''
+      ## tmux split-window -h
+      tmux new-window -c "~/dev" 
+      tmux -2 attach-session -d
     fi
   fi
 fi

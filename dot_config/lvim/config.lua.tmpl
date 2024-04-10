@@ -61,25 +61,36 @@ lvim.builtin.treesitter.context_commentstring = nil
 -- LSP
 lvim.lsp.installer.setup.automatic_installation = false
 
--- local formatters = require("lvim.lsp.null-ls.formatters")
--- formatters.setup({
---   {
---     name = "prettierd",
---     args = { "--print-width", "90" },
---     filetypes = { "javascript", "json", "typescript", "vue", "html", "css", "scss", "markdown" },
---   }
--- })
+local formatters = require("lvim.lsp.null-ls.formatters")
+formatters.setup({
+  -- {
+  --   source = "prettierd",
+  --   command = "prettierd",
+  --   args = { "--print-width", "90" },
+  --   -- filetypes = { "javascript", "json", "typescript", "vue", "html", "css", "scss", "markdown" },
+  -- }
+  {
+    source = "eslint",
+    command = "eslint",
+    args = { "-f", "json", "--stdin", "--stdin-filename", "$FILENAME" },
+  }
+  -- {
+  --   source = "prettier_eslint",
+  --   command = "prettier-eslint",
+  --   args = { "--stdin", "--stdin-filepath", "$FILENAME" }
+  -- }
+})
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   {
     source = "eslint",
-    command = "eslint_d",
-    args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
-    format = "line",
-    on_attach = function(client, _)
-      client.resolved_capabilities.document_formatting = false
-    end,
+    command = "eslint",
+    args = { "-f", "json", "--stdin", "--stdin-filename", "$FILENAME" },
+    -- format = "line",
+    -- on_attach = function(client, _)
+    --   client.resolved_capabilities.document_formatting = false
+    -- end,
   },
 }
 
