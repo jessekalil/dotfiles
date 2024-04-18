@@ -1,7 +1,8 @@
 -- general
 lvim.colorscheme = "tokyonight-night"
-lvim.format_on_save = false
+lvim.format_on_save = true
 lvim.log.level = "info"
+
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
@@ -30,7 +31,6 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 local components = require("lvim.core.lualine.components")
 lvim.builtin.lualine.sections.lualine_c = {
   components.diff,
-  components.treesitter,
   components.filename,
   "searchcount"
 }
@@ -61,36 +61,39 @@ lvim.builtin.treesitter.context_commentstring = nil
 -- LSP
 lvim.lsp.installer.setup.automatic_installation = false
 
+local null_ls_h = require("null-ls.helpers")
 local formatters = require("lvim.lsp.null-ls.formatters")
-formatters.setup({
+formatters.setup {
   -- {
-  --   source = "prettierd",
+  --   name = "prettierd",
   --   command = "prettierd",
-  --   args = { "--print-width", "90" },
+  --   -- args = { "--print-width", "90" }
+  --   -- command = "npx",
+  --   -- args = null_ls_h.range_formatting_args_factory({
+  --   --   "prettier",
+  --   --   "--stdin-filepath",
+  --   --   "$FILENAME",
+  --   -- }, "--range-start", "--range-end", { row_offset = -3, col_offset = -1 }),
   --   -- filetypes = { "javascript", "json", "typescript", "vue", "html", "css", "scss", "markdown" },
   -- }
-  {
-    source = "eslint",
-    command = "eslint",
-    args = { "-f", "json", "--stdin", "--stdin-filename", "$FILENAME" },
-  }
   -- {
-  --   source = "prettier_eslint",
-  --   command = "prettier-eslint",
-  --   args = { "--stdin", "--stdin-filepath", "$FILENAME" }
+  --   name = "eslint",
+  --   -- command = "eslint",
+  --   -- args = { "-f", "json", "--stdin", "--stdin-filename", "$FILENAME" },
   -- }
-})
+  {
+    name = "prettier_eslint",
+    -- filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html", "json", "jsonc", "yaml", "markdown", "markdown.mdx", "graphql", "handlebars" },
+    -- command = "prettier-eslint",
+    -- args = { "--stdin", "--stdin-filepath", "$FILENAME" }
+  }
+}
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   {
-    source = "eslint",
-    command = "eslint",
-    args = { "-f", "json", "--stdin", "--stdin-filename", "$FILENAME" },
-    -- format = "line",
-    -- on_attach = function(client, _)
-    --   client.resolved_capabilities.document_formatting = false
-    -- end,
+    name = "eslint",
+    -- args = { "-f", "json", "--stdin", "--stdin-filename", "$FILENAME" },
   },
 }
 
@@ -114,15 +117,6 @@ lvim.plugins = {
       },
       use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
     }
-  },
-  {
-    "baliestri/aura-theme",
-    lazy = false,
-    priority = 1000,
-    config = function(plugin)
-      vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
-      vim.cmd([[colorscheme aura-dark]])
-    end
   },
   { "dracula/vim" },
   {
@@ -148,6 +142,13 @@ lvim.plugins = {
     config = function()
       require("todo-comments").setup()
     end,
+  },
+  {
+    "m4xshen/smartcolumn.nvim",
+    opts = {
+      colorcolumn = "120",
+      disabled_filetypes = { "NvimTree", "lazy", "lua", "mason", "help", "checkhealth", "lspinfo", "noice", "Trouble", "fish", "zsh", "alpha", "text", "markdown" }
+    }
   },
   -- Discord Presence
   {
