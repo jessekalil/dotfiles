@@ -4,15 +4,6 @@ USE_POWERLINE="true"
 if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
   source /usr/share/zsh/manjaro-zsh-config
 fi
-# Use manjaro zsh prompt
-#if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-#  source /usr/share/zsh/manjaro-zsh-prompt
-#fi
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 
 ZSH_THEME="spaceship"
 
@@ -67,7 +58,6 @@ zinit light zsh-users/zsh-completions
 
 # ZSH Plugins
 plugins=(
-  sudo
   git
   vscode
   node
@@ -94,6 +84,7 @@ alias curltime="curl -w \"@$HOME/.curl-format.txt\" -o /dev/null -s "
 alias open="xdg-open"
 alias dk='docker'
 alias dc='docker compose'
+alias cd='z'
 
 if command -v bat &> /dev/null; then
 	alias catt="bat -pp --theme \"Dracula\""
@@ -158,28 +149,9 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 #######################
 
-# Neofetch 
-# if [ -f /usr/bin/neofetch ]; then
-  #neofetch
-# fi
-
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
-  if [[ $(tmux list-sessions) ]]; then
-    echo "Existing detected, attach? (y/n)"
-    read choice
-    if [[ "$choice" =~ ^(yes|y|Y)$ ]]; then
-      tmux attach-session -t 0
-    elif [[ "$choice" =~ ^(console|c|C)$ ]]; then
-      # do nothing
-    else
-      tmux new-session
-    fi
-  else
-    tmux new -s 'dev' -d
-    tmux rename-window 'home'
-    tmux attach -t 'dev'
-  fi
-fi
+# Zoxide
+eval "$(zoxide init zsh)"
+
