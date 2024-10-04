@@ -14,4 +14,5 @@ return {
   { import = "astrocommunity.colorscheme.tokyonight-nvim" },
   { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.split-and-window.windows-nvim" },
+  { import = "astrocommunity.color.transparent-nvim"}
 }
