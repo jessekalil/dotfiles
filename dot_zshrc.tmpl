@@ -154,6 +154,10 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 #######################
 
+if [[ -e /opt/asdf-vm/asdf.sh ]]; then
+  . /opt/asdf-vm/asdf.sh
+fi
+
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
