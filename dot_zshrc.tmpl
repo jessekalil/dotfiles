@@ -88,7 +88,6 @@ alias curltime="curl -w \"@$HOME/.curl-format.txt\" -o /dev/null -s "
 alias open="xdg-open"
 alias dk='docker'
 alias dc='docker compose'
-alias cd='z'
 
 if command -v bat &> /dev/null; then
 	alias catt="bat -pp --theme \"Dracula\""
@@ -172,5 +171,5 @@ function y() {
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Zoxide
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
