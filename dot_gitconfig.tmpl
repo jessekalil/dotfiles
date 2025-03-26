@@ -9,6 +9,9 @@
   editor = lvim
   autocrlf = false
 
+[branch]
+  sort = -committerdate
+
 {{ if .user.git.custompath }}
 [includeIf "gitdir:{{ .user.git.custompath }}/"]
   path = {{ .user.git.custompath }}/.gitconfig

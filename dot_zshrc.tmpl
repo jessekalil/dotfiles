@@ -18,7 +18,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export BROWSER="powershell.exe /C start"
 export TERM="xterm-256color"
 export NODE_PATH=`which node`
-export BAT_THEME="tokyonight_night"
+export BAT_THEME="Catppuccin Mocha"
 export LANG=en_US.UTF-8
 
 export AWS_DEFAULT_PROFILE="{{ .user.aws.profile }}"
@@ -62,6 +62,7 @@ zinit light zsh-users/zsh-completions
 
 # ZSH Plugins
 plugins=(
+  asdf
   git
   vscode
   node
@@ -88,20 +89,18 @@ alias curltime="curl -w \"@$HOME/.curl-format.txt\" -o /dev/null -s "
 alias open="xdg-open"
 alias dk='docker'
 alias dc='docker compose'
+alias catt="bat -pp"
+alias cat="bat"
 
-if command -v bat &> /dev/null; then
-	alias catt="bat -pp --theme \"Dracula\""
-	alias cat="bat --theme \"Dracula\""
-fi
 # alias make50='make CC=clang CFLAGS="-fsanitize=signed-integer-overflow -fsanitize=undefined -ggdb3 -O0 -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow" LDLIBS="-lcrypt -lcs50 -lm"'
 
 ###
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
-# Nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+## # Nvm
+## export NVM_DIR="$HOME/.nvm"
+## [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+## [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Pnpm
 export PNPM_HOME="/home/jesse/.local/share/pnpm"
@@ -127,29 +126,31 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 
 # NVM
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+## autoload -U add-zsh-hook
+## load-nvmrc() {
+##   local nvmrc_path
+##   nvmrc_path="$(nvm_find_nvmrc)"
+##
+##   if [ -n "$nvmrc_path" ]; then
+##     local nvmrc_node_version
+##     nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+##
+##     if [ "$nvmrc_node_version" = "N/A" ]; then
+##       nvm install
+##     elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+##       nvm use
+##     fi
+##   elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+##     echo "Reverting to nvm default version"
+##     nvm use default
+##   fi
+## }
+## add-zsh-hook chpwd load-nvmrc
+## load-nvmrc
 #######################
 
+# ASDF
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 if [[ -e /opt/asdf-vm/asdf.sh ]]; then
   . /opt/asdf-vm/asdf.sh
 fi
