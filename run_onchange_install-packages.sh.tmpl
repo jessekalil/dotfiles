@@ -2,7 +2,7 @@
 
 {{ if eq .chezmoi.os "linux" }}
 
-  {{ if eq .chezmoi.osRelease.idLike "arch" -}}
+  {{ if eq .chezmoi.osRelease.id "arch" -}}
 
   ## sudo pacman -Syu --noconfirm fzf 
 
@@ -13,6 +13,6 @@
   {{ end }}
 
   # Common
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install --no-bash --completion --key-bindings --no-update-rc
+  ## git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ## ~/.fzf/install --no-bash --completion --key-bindings --no-update-rc
 {{ end }}
