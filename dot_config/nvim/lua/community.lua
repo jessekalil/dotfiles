@@ -12,9 +12,10 @@ return {
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.php" },
-  { import = "astrocommunity.pack.docker"},
+  { import = "astrocommunity.pack.elixir-phoenix" },
   { import = "astrocommunity.colorscheme.tokyonight-nvim" },
   { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.split-and-window.windows-nvim" },
-  { import = "astrocommunity.color.transparent-nvim"}
+  { import = "astrocommunity.color.transparent-nvim" },
+  { import = "astrocommunity.bars-and-lines.lualine-nvim"}
 }

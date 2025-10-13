@@ -23,7 +23,7 @@ return {
   },
 
   -- You can disable default plugins as follows:
-  { "kevinhwang91/nvim-ufo", enabled = false },
+  { "kevinhwang91/nvim-ufo", enabled = true },
   {
     "nvzone/typr",
     dependencies = "nvzone/volt",
