@@ -1,0 +1,45 @@
+[general]
+import = ["~/.config/alacritty/tokyonight_night.toml"]
+
+[terminal.shell]
+program = "/home/kalil/bin/tmux_chooser"
+# program = "/usr/bin/zsh"
+# args = ["--login", "-c", "tmux"]
+
+# [cursor.style]
+# shape = "Beam"
+# blinking = "On"
+
+# [cursor.vi_mode_style]
+# shape = "Beam"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 14.0
+
+# JetBrainsMono Nerd Font Mono,JetBrainsMono
+[font.bold]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Regular"
+
+[window]
+opacity = 0.9
+padding.x = 2
+padding.y = 2
+decorations = "None"
+startup_mode = "Maximized"
+
+[keyboard]
+bindings = [
+    { key = "F11", action = "ToggleFullscreen" },
+]
