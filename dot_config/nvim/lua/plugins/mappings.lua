@@ -15,6 +15,8 @@ return {
           end,
           desc = "Close buffer",
         },
+        ["<Leader>le"] = { "<cmd>EslintFixAll<cr>", desc = "Eslint Fix All" },
+        ["<Leader>xm"] = { ":%s/\\r//g<cr>", desc = "Remove Windows Line Endings" },
       },
     },
   },

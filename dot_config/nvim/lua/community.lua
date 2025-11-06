@@ -17,5 +17,5 @@ return {
   { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.split-and-window.windows-nvim" },
   { import = "astrocommunity.color.transparent-nvim" },
-  { import = "astrocommunity.bars-and-lines.lualine-nvim"}
+  { import = "astrocommunity.bars-and-lines.lualine-nvim" },
 }

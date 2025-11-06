@@ -12,6 +12,10 @@ return {
       "bash",
       "markdown",
       "dockerfile",
+      "go",
+      "typescript",
+      "javascript",
+      "vue",
     })
   end,
 }
