@@ -1,13 +1,7 @@
 unsetopt correct_all
 unsetopt correct
 
-# Use powerline
 USE_POWERLINE="true"
-# Source manjaro-zsh-configuration
-if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-  source /usr/share/zsh/manjaro-zsh-config
-fi
-
 ZSH_THEME="spaceship"
 
 export UID=$UID
@@ -70,7 +64,6 @@ plugins=(
   node
   docker
   aws
-  ## gh
   golang
   history
 )
@@ -79,45 +72,23 @@ source $ZSH/oh-my-zsh.sh
 # Aliases
 alias vsc="code ."
 alias zed="zeditor"
-alias back="cd $OLDPWD"
-alias getclip="powershell.exe Get-Clipboard"
 alias grbdev="gsta && gcd && ggl && gco - && grbd && gstp"
-alias explorer="explorer.exe ."
 alias lz="lazygit"
 alias ls="eza --icons=always"
 alias la='eza -a --icons=always'
 alias myip='curl ifconfig.me'
-alias curltime="curl -w \"@$HOME/.curl-format.txt\" -o /dev/null -s "
 alias open="xdg-open"
 alias dk='docker'
 alias dc='docker compose'
 alias catt="bat -pp"
 alias cat="bat"
 
-# alias make50='make CC=clang CFLAGS="-fsanitize=signed-integer-overflow -fsanitize=undefined -ggdb3 -O0 -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow" LDLIBS="-lcrypt -lcs50 -lm"'
-
 ###
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-
-# Nvm
-if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
-  export NVM_DIR="$HOME/.nvm"
-  source "$NVM_DIR/nvm.sh"
-  source "$NVM_DIR/bash_completion"
-fi
-
-# Pnpm
-export PNPM_HOME="/home/jesse/.local/share/pnpm"
-case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
 
 # Go
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:$(go env GOPATH)/bin"
-## export GOPATH="$(go env GOPATH)"
 
 # Bun
 export PATH="$HOME/.bun/bin:$PATH"
@@ -128,30 +99,6 @@ export BUN_INSTALL="$HOME/.bun"
 if [ -f "$HOME/.cargo/env" ]; then
   source "$HOME/.cargo/env"
 fi
-
-# NVM
-## autoload -U add-zsh-hook
-## load-nvmrc() {
-##   local nvmrc_path
-##   nvmrc_path="$(nvm_find_nvmrc)"
-##
-##   if [ -n "$nvmrc_path" ]; then
-##     local nvmrc_node_version
-##     nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-##
-##     if [ "$nvmrc_node_version" = "N/A" ]; then
-##       nvm install
-##     elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-##       nvm use
-##     fi
-##   elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-##     echo "Reverting to nvm default version"
-##     nvm use default
-##   fi
-## }
-## add-zsh-hook chpwd load-nvmrc
-## load-nvmrc
-#######################
 
 # ASDF
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
@@ -173,9 +120,6 @@ function y() {
 
 # Zoxide
 eval "$(zoxide init --cmd cd zsh)"
-
-# Github Copilot
-## eval "$(gh copilot alias -- zsh)"
 
 # Universal alias
 p() {
