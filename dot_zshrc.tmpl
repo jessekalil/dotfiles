@@ -70,7 +70,7 @@ plugins=(
   node
   docker
   aws
-  gh
+  ## gh
   golang
   history
 )
@@ -155,6 +155,8 @@ fi
 
 # ASDF
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+autoload -Uz compinit && compinit
 
 # Yazi
 function y() {
@@ -173,7 +175,7 @@ function y() {
 eval "$(zoxide init --cmd cd zsh)"
 
 # Github Copilot
-eval "$(gh copilot alias -- zsh)"
+## eval "$(gh copilot alias -- zsh)"
 
 # Universal alias
 p() {
