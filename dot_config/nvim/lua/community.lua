@@ -14,4 +14,5 @@ return {
 	{ import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
 	{ import = "astrocommunity.color.twilight-nvim" },
 	{ import = "astrocommunity.pack.eslint" },
+	{ import = "astrocommunity.ai.opencode-nvim" },
 }

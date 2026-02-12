@@ -23,6 +23,22 @@ return {
       },
     },
   },
+  {
+    "NickvanDyke/opencode.nvim",
+    config = function()
+      require("opencode")
+
+      ---@type opencode.Opts
+      vim.g.opencode_opts = {
+        provider = {
+          enabled = "tmux",
+          tmux = {
+            -- ...
+          },
+        },
+      }
+    end,
+  },
   -- {
   --   "L3MON4D3/LuaSnip",
   --   config = function(plugin, opts)
