@@ -8,5 +8,10 @@ use = "yazi-rs/plugins:smart-enter"
 rev = "88990a6"
 hash = "56fdabc96fc1f4d53c96eb884b02a5be"
 
+[[plugin.deps]]
+use = "larry-oates/open-git-remote"
+rev = "4a5f0b6"
+hash = "ea87816cbbf6b0e0dfac5bc039aaa983"
+
 [flavor]
 deps = []
