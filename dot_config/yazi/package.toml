@@ -1,0 +1,12 @@
+[[plugin.deps]]
+use = "Lil-Dank/lazygit"
+rev = "0e56060"
+hash = "ab2e66065a94cca4886b303518e44bd8"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "88990a6"
+hash = "56fdabc96fc1f4d53c96eb884b02a5be"
+
+[flavor]
+deps = []
