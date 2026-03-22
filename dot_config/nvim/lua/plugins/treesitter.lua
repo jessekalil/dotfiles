@@ -1,8 +1,8 @@
 ---@type LazySpec
 return {
   "nvim-treesitter/nvim-treesitter",
-  opts = {
-    ensure_installed = {
+  opts = function(_, opts)
+    opts.ensure_installed = {
       "lua",
       "vim",
       "json",
@@ -17,6 +17,8 @@ return {
       "javascript",
       "vue",
       "brightscript",
-    },
-  },
+    }
+
+    require("nvim-treesitter.install").prefer_git = true
+  end,
 }

@@ -100,6 +100,7 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 
 # ASDF
+export ASDF_DATA_DIR=/home/kalil/.asdf
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
 autoload -Uz compinit && compinit

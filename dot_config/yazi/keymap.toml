@@ -12,3 +12,8 @@ desc = "Enter the child directory, or open the file"
 on   = [ "g", "l" ]
 run  = "plugin open-git-remote"
 desc = "open git remote url"
+
+[[mgr.prepend_keymap]]
+on   = "F"
+run  = "plugin smart-filter"
+desc = "Smart filter"
