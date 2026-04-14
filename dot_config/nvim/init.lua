@@ -23,12 +23,12 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
-vim.filetype.add {
-  extension = {
-    brs = "brightscript",
-    bs = "brightscript", -- ou 'brighterscript' se preferir distinguir
-  },
-}
+-- vim.filetype.add {
+--   extension = {
+--     brs = "brightscript",
+--     bs = "brightscript", -- ou 'brighterscript' se preferir distinguir
+--   },
+-- }
 
 require "lazy_setup"
 require "polish"
