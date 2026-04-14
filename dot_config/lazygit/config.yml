@@ -1,12 +1,3 @@
-os:
-  # copyToClipboardCmd: '' # See 'Custom Command for Copying to Clipboard' section
-  # editPreset: '' # see 'Configuring File Editing' section
-  # edit: ''
-  # editAtLine: ''
-  # editAtLineAndWait: ''
-  open: 'wslview {{filename}}'
-  openLink: 'wslview {{link}}'
-
 gui:
   nerdFontsVersion: "3"
   theme:
