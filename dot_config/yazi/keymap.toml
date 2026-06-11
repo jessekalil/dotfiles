@@ -17,3 +17,13 @@ desc = "open git remote url"
 on   = "F"
 run  = "plugin smart-filter"
 desc = "Smart filter"
+
+[[mgr.prepend_keymap]]
+on   = "T"
+run  = "plugin toggle-pane min-parent"
+desc = "Show or hide the parent pane"
+
+[[mgr.prepend_keymap]]
+on   = "P"
+run  = "plugin toggle-pane max-preview"
+desc = "Maximize or restore the preview pane"
