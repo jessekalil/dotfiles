@@ -23,9 +23,6 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {},
-    -- customize language server configuration options passed to `lspconfig`
-    ---@diagnostic disable: missing-fields
-    config = {},
     -- customize how language servers are attached
     handlers = {},
     -- Configure buffer local auto commands to add when attaching a language server
@@ -62,5 +59,16 @@ return {
       },
     },
     -- on_attach = function(client, bufnr) end,
+    -- customize language server configuration options passed to `lspconfig`
+    ---@diagnostic disable: missing-fields
+    config = {
+      vtsls = {
+        settings = {
+          typescript = {
+            -- useTsgo
+          },
+        },
+      },
+    },
   },
 }
