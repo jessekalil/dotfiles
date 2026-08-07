@@ -13,6 +13,6 @@ return {
   -- { import = "astrocommunity.bars-and-lines.lualine-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.color.twilight-nvim" },
-  -- { import = "astrocommunity.completion.copilot-lua-cmp" },
+  { import = "astrocommunity.completion.copilot-lua-cmp" },
   { import = "astrocommunity.ai.opencode-nvim" },
 }
