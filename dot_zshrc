@@ -1,0 +1,16 @@
+# Portable Omarchy-inspired Zsh configuration, managed by chezmoi.
+# Keep this independent of /usr/share/omarchy-zsh and Oh My Zsh.
+[[ -o interactive ]] || return
+
+_zsh_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+source "$_zsh_config/env.zsh"
+source "$_zsh_config/options.zsh"
+source "$_zsh_config/aliases.zsh"
+
+for _zsh_function in "$_zsh_config"/functions/*.zsh(N); do
+  source "$_zsh_function"
+done
+unset _zsh_function
+
+source "$_zsh_config/init.zsh"
+unset _zsh_config

@@ -1,0 +1,107 @@
+#compdef omarchy
+
+# Omarchy's dispatcher maps `omarchy theme list` to `omarchy-theme-list`.
+_omarchy() {
+  local executable bin_dir prefix=omarchy part file rest next summary
+  executable=$(command -v omarchy 2>/dev/null) || return
+  bin_dir=$(dirname -- "$(readlink -f -- "$executable")")
+  [[ -d $bin_dir ]] || return
+
+  local i
+  for (( i = 2; i < CURRENT; i++ )); do
+    part=${words[i]}
+    [[ -z $part || $part == -* ]] || prefix+="-$part"
+  done
+
+  local -A seen=()
+  local -a candidates=() routes=()
+  setopt local_options null_glob
+  for file in "$bin_dir/$prefix"-*; do
+    [[ -f $file && -x $file ]] || continue
+    rest=${file:t}
+    rest=${rest#"$prefix"-}
+    next=${rest%%-*}
+    [[ -n $next && $next != -* && -z ${seen[$next]:-} ]] || continue
+    seen[$next]=1
+    candidates+=("$next")
+  done
+
+  if (( CURRENT == 2 )); then
+    candidates+=(commands)
+  elif [[ ${words[2]} == commands ]]; then
+    candidates+=(--all --json --markdown --check)
+  fi
+
+  if (( ${#candidates} )); then
+    for next in "${candidates[@]}"; do
+      file="$bin_dir/$prefix-$next"
+      summary=''
+      if [[ -r $file ]]; then
+        summary=$(command grep -m 1 '^# omarchy:summary=' "$file" 2>/dev/null)
+        summary=${summary#'# omarchy:summary='}
+      fi
+      routes+=("$next:${summary//:/ -}")
+    done
+    _describe -t omarchy-commands 'omarchy command' routes -S ' ' -q
+    return
+  fi
+
+  # Mirror the Bash completion's # omarchy:args= metadata for leaf commands.
+  local n j command_prefix command_path first_arg_index current_arg_index
+  for (( n = CURRENT - 1; n >= 1; n-- )); do
+    command_prefix=omarchy
+    for (( j = 2; j <= n; j++ )); do
+      part=${words[j]}
+      [[ -z $part || $part == -* ]] || command_prefix+="-$part"
+    done
+    command_path="$bin_dir/$command_prefix"
+    if [[ -x $command_path ]]; then
+      first_arg_index=$(( n + 1 ))
+      break
+    fi
+  done
+  [[ -n ${first_arg_index:-} ]] || return
+
+  local args alt token actual value match
+  local -a choices=() spec=() alternatives=()
+  args=$(command grep -m 1 '^# omarchy:args=' "$command_path" 2>/dev/null)
+  [[ -n $args ]] || return
+  args=${args#*'omarchy:args='}
+  current_arg_index=$(( CURRENT - first_arg_index ))
+  alternatives=("${(@s: | :)args}")
+
+  for alt in "${alternatives[@]}"; do
+    spec=(${=alt})
+    match=1
+    for (( j = 0; j < current_arg_index; j++ )); do
+      token=${spec[j+1]:-}
+      actual=${words[first_arg_index+j]:-}
+      if [[ -z $token ]]; then
+        match=0
+        break
+      fi
+      if [[ $token == \<*\> || $token == \[*\] ]]; then
+        value=${token#?}
+        value=${value%?}
+        if [[ $value == *\|* && "|$value|" != *"|$actual|"* ]]; then
+          match=0
+        fi
+      elif [[ $token != $actual ]]; then
+        match=0
+      fi
+    done
+    (( match )) || continue
+    token=${spec[current_arg_index+1]:-}
+    [[ -n $token ]] || continue
+    if [[ $token == \<*\> || $token == \[*\] ]]; then
+      value=${token#?}
+      value=${value%?}
+      [[ $value == *\|* ]] && choices+=("${(@s:|:)value}")
+    else
+      choices+=("$token")
+    fi
+  done
+  (( ${#choices} )) && compadd -a choices
+}
+
+_omarchy "$@"
