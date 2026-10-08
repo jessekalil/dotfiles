@@ -1,5 +1,4 @@
 README.md
-.config/nvim/lazy-lock.json
 .config/lazygit/state.yml
 {{ if not (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 .config/mise/config.toml
