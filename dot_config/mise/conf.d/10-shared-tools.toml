@@ -1,0 +1,8 @@
+# Shared global tools for all machines, managed by chezmoi.
+# Keep machine-specific tools and settings in ~/.config/mise/config.toml.
+[tools]
+"aqua:modem-dev/hunk" = "latest"
+node = "22.14.0"
+"npm:ctx7" = "latest"
+opencode = "latest"
+pnpm = "latest"

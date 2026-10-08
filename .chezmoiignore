@@ -5,6 +5,3 @@ README.md
 .config/fastfetch
 .config/fastfetch/**
 {{ end }}
-{{ if not (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-.config/mise/config.toml
-{{ end }}
