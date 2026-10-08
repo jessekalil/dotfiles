@@ -1,5 +1,10 @@
 README.md
 .config/lazygit/state.yml
+# Keep Omarchy's system Fastfetch configuration instead of installing a user override.
+{{ if lookPath "omarchy" }}
+.config/fastfetch
+.config/fastfetch/**
+{{ end }}
 {{ if not (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 .config/mise/config.toml
 {{ end }}
