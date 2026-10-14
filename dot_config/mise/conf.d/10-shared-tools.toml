@@ -4,5 +4,5 @@
 "aqua:modem-dev/hunk" = "latest"
 node = "22.14.0"
 "npm:ctx7" = "latest"
-opencode = "latest"
+"npm:@opencode/cli" = { version = "2.0.27", allow_builds = ["@opencode/cli"] }
 pnpm = "latest"
