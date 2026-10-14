@@ -1,4 +1,4 @@
-bindkey -e
+bindkey -v
 setopt COMBINING_CHARS INTERACTIVE_COMMENTS EXTENDED_GLOB AUTO_CD CHASE_LINKS
 setopt NO_HASH_CMDS NO_HASH_DIRS
 unsetopt BEEP
@@ -27,50 +27,15 @@ bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 bindkey '^[[C' forward-char
 bindkey '^[[D' backward-char
+bindkey '^[[1;5C' forward-word
 bindkey '^[[Z' reverse-menu-complete
 
-# Keep the Omarchy Zsh Tab menu, while allowing fzf's ** completion trigger.
+# Load menu support for Zsh's regular completion menu.
 zmodload zsh/complist
-typeset -gi _omarchy_tab_route_active=0
-_omarchy-route-complete-or-expand() {
-  emulate -L zsh
-  setopt extended_glob
-  unsetopt beep
-
-  local trigger="${FZF_COMPLETION_TRIGGER-'**'}"
-  if [[ -n $trigger && $LBUFFER == *$trigger && ${+widgets[fzf-completion]} -eq 1 ]]; then
-    zle fzf-completion
-    return $?
-  fi
-
-  if [[ $LASTWIDGET == _omarchy-route-complete-or-expand && $_omarchy_tab_route_active -eq 1 ]]; then
-    zle menu-complete
-    zle menu-select
-    return $?
-  fi
-
-  _omarchy_tab_route_active=0
-  if [[ -z $RBUFFER && $LBUFFER == omarchy[[:space:]]* && $LBUFFER != *[[:space:]] ]]; then
-    local current="${LBUFFER##*[[:space:]]}"
-    if [[ -n $current && $current != -* ]]; then
-      zstyle ':completion:*' menu yes
-      zle menu-complete
-      _omarchy_tab_route_active=1
-      return $?
-    fi
-  fi
-
-  zstyle ':completion:*' menu select
-  zle expand-or-complete
-}
-zle -N _omarchy-route-complete-or-expand
-_omarchy-bind-tab-completion() { bindkey '^I' _omarchy-route-complete-or-expand; }
-_omarchy-bind-tab-completion
+# Preserve ordinary completion as fzf-completion's fallback; fzf binds Tab
+# after this file is loaded and handles the ** trigger itself.
+bindkey -M viins '^I' expand-or-complete
 bindkey -M menuselect '^[[Z' reverse-menu-complete
-
-# fzf also binds Tab, so restore our widget after it initializes.
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd _omarchy-bind-tab-completion
 
 if (( $+commands[fzf] && $+commands[fd] )); then
   fzf-file-widget() {

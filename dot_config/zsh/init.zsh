@@ -5,10 +5,6 @@ else
   print -u2 'Install starship before activating this Zsh configuration.'
 fi
 
-if (( $+commands[zoxide] )); then
-  eval "$(zoxide init zsh)"
-fi
-
 if (( $+commands[try] )); then
   eval "$(try init ~/Work/tries)"
 fi
@@ -18,6 +14,11 @@ fpath=("$_zsh_completions" $fpath)
 autoload -Uz compinit
 compinit -i
 unset _zsh_completions
+
+# Initialize after compinit so zoxide can register its Zsh completion.
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
 
 if (( $+commands[fzf] )); then
   [[ -r /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
