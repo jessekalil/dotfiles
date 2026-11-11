@@ -2,7 +2,8 @@
 # Keep machine-specific tools and settings in ~/.config/mise/config.toml.
 [tools]
 "aqua:modem-dev/hunk" = "latest"
-node = "22.14.0"
+node = "22.23.4"
 "npm:ctx7" = "latest"
 "npm:@opencode/cli" = { version = "latest", allow_builds = ["@opencode/cli"] }
+"npm:@opencode/browse" = { version = "latest", allow_low_downloads = true }
 pnpm = "latest"
